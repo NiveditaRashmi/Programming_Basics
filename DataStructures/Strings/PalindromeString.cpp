@@ -6,52 +6,47 @@
 #include<string>
 #include<bits/stdc++.h>
 #include <cstring>
+#include<ctype.h>
 using namespace std;
 
-	string reverseString(string s) {
-        char temp;
-        int len = s.size()-1;
-        for(int i=0; i<=len/2; i++) {
-        	
-            temp = s[i];
-            cout << s[i] << "  " << temp<< "  "<< s[len-i]<<endl;
-            s[i] = s[len-i];
-            s[len-i]= temp;
-        }
-//        transform(s.begin(), s.end(), s.begin(), ::tolower());
-        return s;
-    }
-
 	bool isPalindrome(string s) {
+		if(s == "") {
+			return true;
+		}
         for(int i=0; i<s.length(); i++){
-            if(s[i]<'A' || s[i]>'Z' && s[i]<'a' || s[i]>'z') {
-                s.erase(i,1);
-                i--;
-            } else {
-            	char c = s[i];
-            	s[i] = tolower(c);
-			}
+            if ((s[i] < 'A' || s[i] > 'Z' && 
+			s[i] < 'a' || s[i] > 'z') && (!isdigit(s[i]))) 
+		{ 
+			// erase function to erase 
+			// the character 
+			s.erase(i, 1); 
+			i--; 
+		}
+		if(isalpha(s[i])){
+			s[i] = tolower(s[i]);
+		} 
         }
         cout << "string is   " << s << endl;
         if(s.length() == 1) {
+        	cout << "inside ." << s.length();
         	return true;
 		}
-        
-        
-        string newString = reverseString(s);
-        cout << "newSring   " << newString << endl;
-//        transform(s.begin(), s.end(), s.begin(), ::tolower());
-        if(newString.compare(s) == 0) {
-            return true;
-        } else {
-            return false;
-        }
+//		s.erase(remove(s.begin(), s.end(), ' '), s.end());
+//		cout << " new string    " << s << endl;
+		int len=s.length();
+		for(int i=0; i<len; i++) {
+			
+			if(s[i] != s[len-i-1]) {
+				return false;
+			}
+		}
+		return true;
     }
     
     
 	
 	int main() {
-		string s= " ";
+		string s=   ".";// " ";//"A man, a plan, a canal: Panama";//"......a.....";     //"A man, a plan, a canal: Panama";        //"a.0";
 		cout << isPalindrome(s);
 		return 0;
 	}
